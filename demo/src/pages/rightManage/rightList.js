@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Tag, Button, Modal } from 'antd';
+import { Table, Tag, Button, Modal,Popover, Switch } from 'antd';
 import axios from 'axios';
 import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined} from '@ant-design/icons'
 
@@ -49,7 +49,17 @@ export default function RightList() {
         // console.log(item);
         return <div>
           <Button danger shape="circle" icon={<DeleteOutlined />} onClick={() => confirmMethod(item)}></Button>
-          <Button type="primary" shape="circle" icon={<EditOutlined />}></Button>
+          <Popover
+            content={
+              <div style={{textAlign: "center"}}>
+                <Switch checked={item.pagepermisson} onChange={()=>switchMethod(item)}></Switch>
+              </div>
+            }
+            title="页面配置项"
+            trigger={item.pagepermisson === undefined ? '' : 'click'}
+          >
+            <Button type="primary" shape="circle" icon={<EditOutlined />} disabled={item.pagepermisson===undefined}></Button>
+          </Popover>
         </div>
       }
     }
@@ -85,6 +95,22 @@ export default function RightList() {
       setdataSourse([...dataSource]);
       //侧边菜单栏的状态也要同步更新
       axios.delete(`http://localhost:5000/children/${item.id}`);
+    }
+  }
+  //开关切换的回调函数
+  const switchMethod = (item) => {
+    item.pagepermisson = item.pagepermisson === 1 ? 0 : 1;
+    //当前页面同步
+    setdataSourse([...dataSource]);
+    //后端同步  
+    if(item.grade === 1) {
+      axios.patch(`http://localhost:5000/rights/${item.id}`,{
+        pagepermisson: item.pagepermisson
+      })
+    } else {
+      axios.patch(`http://localhost:5000/children/${item.id}`,{
+        pagepermisson: item.pagepermisson
+      })
     }
   }
 
