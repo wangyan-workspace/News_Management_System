@@ -1,10 +1,10 @@
-import React,{useEffect,useState} from 'react';
-import { Layout,Menu } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Layout, Menu } from 'antd';
 //引入withRouter高阶组件，是当前组件随时随地的获取props上面的属性
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import {
-  UserOutlined 
+  UserOutlined
 } from '@ant-design/icons';
 import './index.css';
 const { Sider } = Layout;
@@ -50,12 +50,12 @@ const { SubMenu } = Menu;
 
 //侧边菜单栏的图标映射
 const iconList = {
-  "/home":<UserOutlined />,
-  "/user-manage":<UserOutlined />,
-  "/user-manage/list":<UserOutlined />,
-  "/right-manage":<UserOutlined />,
-  "/right-manage/role/list":<UserOutlined />,
-  "/right-manage/right/list":<UserOutlined />
+  "/home": <UserOutlined />,
+  "/user-manage": <UserOutlined />,
+  "/user-manage/list": <UserOutlined />,
+  "/right-manage": <UserOutlined />,
+  "/right-manage/role/list": <UserOutlined />,
+  "/right-manage/right/list": <UserOutlined />
   //.......
 }
 
@@ -63,10 +63,10 @@ function SideMenu(props) {
   //获取路由导航完整路径
   const selectKeys = [props.location.pathname];
   //分割取出一级菜单
-  const openKeys = ["/"+props.location.pathname.split("/")[1]];
+  const openKeys = ["/" + props.location.pathname.split("/")[1]];
 
   //存储菜单栏列表
-  const [menu,setMenu] = useState([]);
+  const [menu, setMenu] = useState([]);
 
   //获取侧边菜单栏数据
   useEffect(() => {
@@ -74,7 +74,7 @@ function SideMenu(props) {
       console.log(res.data);
       setMenu(res.data);
     })
-  },[])
+  }, [])
 
   //页面权限的回调函数
   const checkPagePermission = (item) => {
@@ -82,17 +82,15 @@ function SideMenu(props) {
   }
   const renderMenu = (menuList) => {
     return menuList.map(item => {
-      if(item.children?.length>0 && checkPagePermission(item)) {
-        return (
-          <SubMenu key={item.key} icon={iconList[item.key]} title={item.title}>
-            {/* 递归调用 */}
-            {
-              renderMenu(item.children)
-            }
-          </SubMenu>
-        )
+      if (item.children?.length > 0 && checkPagePermission(item)) {
+        return <SubMenu key={item.key} icon={iconList[item.key]} title={item.title}>
+          {/* 递归调用 */}
+          {renderMenu(item.children)}
+        </SubMenu>
       }
-      return checkPagePermission(item) && <Menu.Item key={item.key} icon={iconList[item.key]} onClick={()=> {
+
+      return checkPagePermission(item) && <Menu.Item key={item.key} icon={iconList[item.key]} onClick={() => {
+        //  console.log(props)
         props.history.push(item.key)
       }}>{item.title}</Menu.Item>
     })
@@ -111,7 +109,7 @@ function SideMenu(props) {
           </Menu>
         </div>
       </div>
-      </Sider>
+    </Sider>
   );
 }
 
