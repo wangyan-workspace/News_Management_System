@@ -119,6 +119,7 @@ export default function RightList() {
       <Table
         dataSource={dataSource}
         columns={columns}
+        //限制每页展示5条数据
         pagination={{
           pageSize: 5
         }}
