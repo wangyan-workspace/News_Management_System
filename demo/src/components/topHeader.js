@@ -1,42 +1,54 @@
-import React,{ useState } from 'react';
-import { Layout, Dropdown,Menu ,Avatar } from 'antd';
+import React, { useState } from 'react';
+import { Layout, Dropdown, Menu, Avatar } from 'antd';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   UserOutlined
 } from '@ant-design/icons';
-import MenuItem from 'antd/lib/menu/MenuItem';
+import { withRouter } from 'react-router-dom';
 
 const { Header } = Layout;
-export default function TopHeader() {
+
+function TopHeader(props) {
   const [collapsed, setCollapsed] = useState(false);
   //改变折叠状态
   const changeCollapsed = () => {
     setCollapsed(!collapsed);
   }
+
+  const { role: { roleName }, username } = JSON.parse(localStorage.getItem("token"));
   //下拉的依赖菜单
   const menu = (
     <Menu>
-      <MenuItem>
-        超级管理员
-      </MenuItem>
-      <MenuItem danger>
+      <Menu.Item>
+        {roleName}
+      </Menu.Item>
+      <Menu.Item
+        danger={true}
+        onClick={() => {
+          //清除token
+          localStorage.removeItem("token");
+          // 跳转到登录页面
+          props.history.replace("/login")
+        }}
+      >
         退出
-      </MenuItem>
+      </Menu.Item>
     </Menu>
   )
   return (
     <Header className="site-layout-background" style={{ padding: "0 16px" }}>
       {
-        collapsed?<MenuUnfoldOutlined onClick={changeCollapsed}/>:<MenuFoldOutlined onClick={changeCollapsed}/>
+        collapsed ? <MenuUnfoldOutlined onClick={changeCollapsed} /> : <MenuFoldOutlined onClick={changeCollapsed} />
       }
 
-      <div style={{float: "right"}}>
-        <span>欢迎admin回来</span>
+      <div style={{ float: "right" }}>
+        <span>欢迎<span style={{ color: "#1890ff" }}>{username}</span>回来</span>
         <Dropdown overlay={menu}>
-          <Avatar size="large" icon={<UserOutlined/>}/>
+          <Avatar size="large" icon={<UserOutlined />} />
         </Dropdown>
       </div>
     </Header>
   );
 }
+export default withRouter(TopHeader)

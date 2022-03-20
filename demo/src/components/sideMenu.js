@@ -68,6 +68,7 @@ function SideMenu(props) {
   //存储菜单栏列表
   const [menu, setMenu] = useState([]);
 
+  const {role:{rights}} = JSON.parse(localStorage.getItem("token"));
   //获取侧边菜单栏数据
   useEffect(() => {
     axios.get("http://localhost:5000/rights?_embed=children").then(res => {
@@ -78,7 +79,8 @@ function SideMenu(props) {
 
   //页面权限的回调函数
   const checkPagePermission = (item) => {
-    return item.pagepermisson;
+    //对应的用户角色展示对应的用户权限的页面
+    return item.pagepermisson && rights.includes(item.key);
   }
   const renderMenu = (menuList) => {
     return menuList.map(item => {

@@ -31,14 +31,25 @@ export default function UserList() {
   // 创建“更新用户信息”的ref,在父组件中可以拿取子组件中的Dom节点
   const updateForm = useRef(null);
 
+  const {roleId,region,username} = JSON.parse(localStorage.getItem("token"));
+
   //请求用户的相关数据
   useEffect(() => {
+    //更好的理解
+    const roleObj = {
+      "1":"superAdmin",
+      "2": "admin",
+      "3": "editor"
+    }
     axios.get("http://localhost:5000/users?_expand=role").then(res => {
       const userList = res.data;
       console.log("userList", userList);
-      setDataSource(userList);
+      setDataSource(roleObj[roleId] === "superAdmin" ? userList : [
+        ...userList.filter(item => item.username === username),
+        ...userList.filter(item => item.region === region && roleObj[item.roleId] === "editor")
+      ]);
     })
-  }, []);
+  }, [roleId,region,username]);
 
   //请求获取区域数据
   useEffect(() => {
@@ -275,6 +286,7 @@ export default function UserList() {
           roleList={roleList}
           ref={updateForm}
           isUpdateDisabled={isUpdateDisabled}
+          isUpdate={true}
         />
       </Modal>
     </div>
