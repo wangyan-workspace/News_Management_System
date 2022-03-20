@@ -18,6 +18,7 @@ const UserForm = forwardRef((props, ref) => {
         "2": "admin",
         "3": "editor"
     }
+    //处理下拉菜单中每一项区域是否禁用
     const checkRegionDisabled = (item) => {
         console.log(item);
         if (props.isUpdate) {
@@ -34,6 +35,7 @@ const UserForm = forwardRef((props, ref) => {
             }
         }
     }
+    //处理下拉菜单中每一个角色是否禁用
     const checkRoleDisabled = (item) => {
         console.log(item);
         if (props.isUpdate) {
