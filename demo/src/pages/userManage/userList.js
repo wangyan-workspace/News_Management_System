@@ -41,7 +41,7 @@ export default function UserList() {
       "2": "admin",
       "3": "editor"
     }
-    axios.get("http://localhost:5000/users?_expand=role").then(res => {
+    axios.get("/users?_expand=role").then(res => {
       const userList = res.data;
       console.log("userList", userList);
       setDataSource(roleObj[roleId] === "superAdmin" ? userList : [
@@ -53,7 +53,7 @@ export default function UserList() {
 
   //请求获取区域数据
   useEffect(() => {
-    axios.get("http://localhost:5000/regions").then(res => {
+    axios.get("/regions").then(res => {
       const regionList = res.data;
       console.log("regionList", regionList);
       setRegionList(regionList);
@@ -62,7 +62,7 @@ export default function UserList() {
 
   //请求获取角色数据
   useEffect(() => {
-    axios.get("http://localhost:5000/roles").then(res => {
+    axios.get("/roles").then(res => {
       const roleList = res.data;
       console.log("roleList", roleList);
       setRoleList(roleList);
@@ -158,7 +158,7 @@ export default function UserList() {
     console.log(item);
     //当前页面同步+后端同步
     setDataSource(dataSource.filter(data => data.id !== item.id));
-    axios.delete(`http://localhost:5000/users/${item.id}`);
+    axios.delete(`/users/${item.id}`);
 
   }
 
@@ -171,7 +171,7 @@ export default function UserList() {
       setIsAddVisible(false);
 
       //post到后端，生成id，在设置dataSource,方便后面的删除和更新
-      axios.post("http://localhost:5000/users", {
+      axios.post("/users", {
         ...value,
         "roleState": true,
         "default": false
@@ -195,7 +195,7 @@ export default function UserList() {
     item.roleState = !item.roleState;
     setDataSource([...dataSource]);
 
-    axios.patch(`http://localhost:5000/users/${item.id}`, {
+    axios.patch(`/users/${item.id}`, {
       roleState: item.roleState
     })
   }
@@ -238,7 +238,7 @@ export default function UserList() {
       setIsUpdateDisabled(!isUpdateDisabled);
 
       //更新后端数据
-      axios.patch(`http://localhost:5000/users/${current.id}`, value);
+      axios.patch(`/users/${current.id}`, value);
     })
   }
   return (

@@ -71,7 +71,7 @@ function SideMenu(props) {
   const {role:{rights}} = JSON.parse(localStorage.getItem("token"));
   //获取侧边菜单栏数据
   useEffect(() => {
-    axios.get("http://localhost:5000/rights?_embed=children").then(res => {
+    axios.get("/rights?_embed=children").then(res => {
       console.log(res.data);
       setMenu(res.data);
     })

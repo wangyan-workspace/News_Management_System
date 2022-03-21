@@ -39,8 +39,8 @@ export default function NewsRouter() {
 
     useEffect(() => {
         Promise.all([
-            axios.get("http://localhost:5000/rights"),
-            axios.get("http://localhost:5000/children"),
+            axios.get("/rights"),
+            axios.get("/children"),
         ]).then(res => {
             console.log("获取路由信息", res);
             setBackRouteList([...res[0].data, ...res[1].data]);

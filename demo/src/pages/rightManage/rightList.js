@@ -11,7 +11,7 @@ export default function RightList() {
 
   //获取权限列表
   useEffect(() => {
-    axios.get("http://localhost:5000/rights?_embed=children").then(res => {
+    axios.get("/rights?_embed=children").then(res => {
       const list = res.data;
       //首页没有二级菜单，首先要先置为空，表格的树形结构会根据children属性自动生成
       list.forEach(item => {
@@ -84,7 +84,7 @@ export default function RightList() {
       //同步更新一级页面信息
       setdataSourse(dataSource.filter(data => data.id !== item.id));
       //侧边菜单栏的状态也要同步更新
-      axios.delete(`http://localhost:5000/rights/${item.id}`);
+      axios.delete(`/rights/${item.id}`);
     } else {
       console.log(dataSource);
       //当删除二级页面信息时，先找出对应的一级路标的数组，在删除二级路标对应某一条的数据
@@ -94,7 +94,7 @@ export default function RightList() {
       //filter是浅拷贝，二级页面信息发生改变时，dataSource会受到影响，要重新赋予dataSource新的值，并且必须要使用解构赋值的方式
       setdataSourse([...dataSource]);
       //侧边菜单栏的状态也要同步更新
-      axios.delete(`http://localhost:5000/children/${item.id}`);
+      axios.delete(`/children/${item.id}`);
     }
   }
   //开关切换的回调函数
@@ -104,11 +104,11 @@ export default function RightList() {
     setdataSourse([...dataSource]);
     //后端同步  
     if (item.grade === 1) {
-      axios.patch(`http://localhost:5000/rights/${item.id}`, {
+      axios.patch(`/rights/${item.id}`, {
         pagepermisson: item.pagepermisson
       })
     } else {
-      axios.patch(`http://localhost:5000/children/${item.id}`, {
+      axios.patch(`/children/${item.id}`, {
         pagepermisson: item.pagepermisson
       })
     }

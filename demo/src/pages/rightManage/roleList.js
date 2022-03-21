@@ -22,14 +22,14 @@ export default function RoleList() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   // 获取角色列表
   useEffect((item) => {
-    axios.get("http://localhost:5000/roles").then(res => {
+    axios.get("/roles").then(res => {
       console.log("roleList", res.data);
       setDataSource(res.data);
     })
   }, [])
   //获取权限列表
   useEffect(() => {
-    axios.get("http://localhost:5000/rights?_embed=children").then(res => {
+    axios.get("/rights?_embed=children").then(res => {
       console.log("rightList", res.data);
       setRightList(res.data);
     })
@@ -90,7 +90,7 @@ export default function RoleList() {
   const deleteMethod = (item) => {
     setDataSource(dataSource.filter(data => data.id !== item.id));
     //同步后端数据
-    axios.delete(`http://localhost:5000/roles/${item.id}`);
+    axios.delete(`/roles/${item.id}`);
   }
   // 弹窗确认的回调
   const handleOk = () => {
@@ -109,7 +109,7 @@ export default function RoleList() {
     // console.log(newDataSource);
     setDataSource(newDataSource);
     // 更新同步到后端的数据 patch
-    axios.patch(`http://localhost:5000/roles/${currentId}`, {
+    axios.patch(`/roles/${currentId}`, {
       rights: currentRights
     })
   }
