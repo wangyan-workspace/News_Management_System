@@ -13,6 +13,8 @@ import AuditList from '../pages/auditManage/AuditList';
 import Unpublished from '../pages/publishManage/Unpublished';
 import Published from '../pages/publishManage/Published';
 import Sunset from '../pages/publishManage/Sunset';
+import NewsPreview from '../pages/newsManage/NewsPreview';
+import NewsUpdate from '../pages/newsManage/NewsUpdate';
 import axios from 'axios';
 
 //动态映射路由
@@ -24,6 +26,8 @@ const LocalRouterMap = {
     "/news-manage/add": NewsAdd,
     "/news-manage/draft": NewsDraft,
     "/news-manage/category": NewsCategory,
+    "/news-manage/preview/:id": NewsPreview,
+    "/news-manage/update/:id": NewsUpdate,
     "/audit-manage/audit": Audit,
     "/audit-manage/list": AuditList,
     "/publish-manage/unpublished": Unpublished,
@@ -34,7 +38,7 @@ export default function NewsRouter() {
     // 存储后端返回的路由信息
     const [backRouteList, setBackRouteList] = useState([]);
 
-    const {role:{rights}} = JSON.parse(localStorage.getItem("token"));
+    const { role: { rights } } = JSON.parse(localStorage.getItem("token"));
 
     useEffect(() => {
         Promise.all([
@@ -44,10 +48,10 @@ export default function NewsRouter() {
             console.log("获取路由信息", res);
             setBackRouteList([...res[0].data, ...res[1].data]);
         })
-    },[])
+    }, [])
     //有权限且路由匹配
     const checkRoute = (item) => {
-        return LocalRouterMap[item.key] && item.pagepermisson
+        return LocalRouterMap[item.key] && (item.pagepermisson || item.routepermisson)
     }
     // 匹配获取对应的权限页面
     const checkUserPermission = (item) => {
@@ -57,12 +61,12 @@ export default function NewsRouter() {
         <Switch>
             {
                 backRouteList.map(item => {
-                    if(checkRoute(item) && checkUserPermission(item)) {
-                        return <Route 
-                            path={item.key} 
-                            key={item.key} 
+                    if (checkRoute(item) && checkUserPermission(item)) {
+                        return <Route
+                            path={item.key}
+                            key={item.key}
                             component={LocalRouterMap[item.key]}
-                            exact 
+                            exact
                         />
                     }
                     return null;
