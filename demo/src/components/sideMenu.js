@@ -3,6 +3,7 @@ import { Layout, Menu } from 'antd';
 //引入withRouter高阶组件，是当前组件随时随地的获取props上面的属性
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import {
   UserOutlined
 } from '@ant-design/icons';
@@ -68,7 +69,7 @@ function SideMenu(props) {
   //存储菜单栏列表
   const [menu, setMenu] = useState([]);
 
-  const {role:{rights}} = JSON.parse(localStorage.getItem("token"));
+  const { role: { rights } } = JSON.parse(localStorage.getItem("token"));
   //获取侧边菜单栏数据
   useEffect(() => {
     axios.get("/rights?_embed=children").then(res => {
@@ -99,7 +100,7 @@ function SideMenu(props) {
   }
 
   return (
-    <Sider trigger={null} collapsible collapsed={false} >
+    <Sider trigger={null} collapsible collapsed={props.isCollapsed} >
       <div className='side'>
         <div className="logo">全球新闻发布管理系统</div>
         <div className='menu'>
@@ -115,4 +116,10 @@ function SideMenu(props) {
   );
 }
 
-export default withRouter(SideMenu);
+const mapStateToProps = ({ CollapsedReducer: { isCollapsed } }) => {
+  return {
+    isCollapsed
+  }
+}
+
+export default connect(mapStateToProps)(withRouter(SideMenu));

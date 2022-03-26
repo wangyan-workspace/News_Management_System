@@ -1,6 +1,6 @@
-// import { useEffect } from 'react';
-// import axios from 'axios';
-import Auth from './router/auth'
+import Auth from './router/auth';
+import { Provider } from 'react-redux';
+import store from './redux/store'
 import './App.css';
 
 function App() {
@@ -11,7 +11,9 @@ function App() {
   //   })
   // },[])
   return (
+    <Provider store={store}>
       <Auth></Auth>
+    </Provider>
   );
 }
 
