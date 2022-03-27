@@ -16,6 +16,8 @@ import Sunset from '../pages/publishManage/Sunset';
 import NewsPreview from '../pages/newsManage/NewsPreview';
 import NewsUpdate from '../pages/newsManage/NewsUpdate';
 import axios from 'axios';
+import { Spin } from 'antd';
+import { connect } from 'react-redux';
 
 //动态映射路由
 const LocalRouterMap = {
@@ -34,7 +36,7 @@ const LocalRouterMap = {
     "/publish-manage/published": Published,
     "/publish-manage/sunset": Sunset
 }
-export default function NewsRouter() {
+function NewsRouter(props) {
     // 存储后端返回的路由信息
     const [backRouteList, setBackRouteList] = useState([]);
 
@@ -58,28 +60,36 @@ export default function NewsRouter() {
         return rights.includes(item.key);
     }
     return (
-        <Switch>
-            {
-                backRouteList.map(item => {
-                    if (checkRoute(item) && checkUserPermission(item)) {
-                        return <Route
-                            path={item.key}
-                            key={item.key}
-                            component={LocalRouterMap[item.key]}
-                            exact
-                        />
-                    }
-                    return null;
-                })
-            }
+        <Spin size="loading" spinning={props.isLoading}>
+            <Switch>
+                {
+                    backRouteList.map(item => {
+                        if (checkRoute(item) && checkUserPermission(item)) {
+                            return <Route
+                                path={item.key}
+                                key={item.key}
+                                component={LocalRouterMap[item.key]}
+                                exact
+                            />
+                        }
+                        return null;
+                    })
+                }
 
-            {/* 重定向 */}
-            <Redirect from="/" to="/home" exact />
-            {/* 模糊匹配，匹配不到对应的路由，进入未授权页面 */}
-            {
-                //防止首页面初次加载出现未授权的字样，闪一下效果不太好
-                backRouteList.length > 0 && <Route path="*" component={NoPermission} />
-            }
-        </Switch>
+                {/* 重定向 */}
+                <Redirect from="/" to="/home" exact />
+                {/* 模糊匹配，匹配不到对应的路由，进入未授权页面 */}
+                {
+                    //防止首页面初次加载出现未授权的字样，闪一下效果不太好
+                    backRouteList.length > 0 && <Route path="*" component={NoPermission} />
+                }
+            </Switch>
+        </Spin>
     )
 }
+
+const mapStateToProps = ({ LoadingReducer: { isLoading } }) => ({
+    isLoading
+})
+
+export default connect(mapStateToProps)(NewsRouter);
