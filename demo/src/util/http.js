@@ -1,10 +1,10 @@
 import axios from 'axios';
-import store from '../redux/store';
+import { store } from '../redux/store';
 axios.defaults.baseURL = "http://localhost:5000";
 
 axios.interceptors.request.use(function (config) {
     // Do something before request is sent
-    
+
     // 显示loading
     store.dispatch({
         type: "change_loading",

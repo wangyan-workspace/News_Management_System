@@ -1,6 +1,7 @@
 import Auth from './router/auth';
 import { Provider } from 'react-redux';
-import store from './redux/store'
+import { store, persistor } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 import './App.css';
 
 function App() {
@@ -12,7 +13,10 @@ function App() {
   // },[])
   return (
     <Provider store={store}>
-      <Auth></Auth>
+      {/* 数据持久化 */}
+      <PersistGate loading={null} persistor={persistor}>
+        <Auth></Auth>
+      </PersistGate>
     </Provider>
   );
 }
