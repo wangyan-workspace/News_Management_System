@@ -1,20 +1,25 @@
 import React from 'react';
-import { HashRouter,Redirect,Route,Switch} from 'react-router-dom';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Login from '../pages/login/Login';
 import NewsSandBox from '../pages/sandbox/NewsSandBox';
+import News from '../pages/news/News';
+import Detail from '../pages/news/Detail';
+
 export default function Auth() {
-  return (
-      <HashRouter>
-          <Switch>
-                <Route path="/login" component={Login}/>
+    return (
+        <HashRouter>
+            <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/news" component={News} />
+                <Route path="/detail/:id" component={Detail} />
                 {/* <Route path="/" component={NewsSandBox}/> */}
-                <Route path="/" render={()=>
-                    localStorage.getItem("token")?
-                    <NewsSandBox></NewsSandBox>:
-                    <Redirect to="/login"/>
-                }/>
-          </Switch>
-      </HashRouter>
-  );
+                <Route path="/" render={() =>
+                    localStorage.getItem("token") ?
+                        <NewsSandBox></NewsSandBox> :
+                        <Redirect to="/login" />
+                } />
+            </Switch>
+        </HashRouter>
+    );
 }
 
