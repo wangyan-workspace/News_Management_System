@@ -5,7 +5,23 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import {
-  UserOutlined
+  HomeOutlined,
+  UserOutlined,
+  BarsOutlined,
+  AuditOutlined,
+  TeamOutlined,
+  DatabaseOutlined,
+  FolderOpenOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  RadarChartOutlined,
+  LaptopOutlined,
+  FileSearchOutlined,
+  OrderedListOutlined,
+  UploadOutlined,
+  FormOutlined,
+  CloudUploadOutlined,
+  ClearOutlined
 } from '@ant-design/icons';
 import './index.css';
 const { Sider } = Layout;
@@ -51,15 +67,24 @@ const { SubMenu } = Menu;
 
 //侧边菜单栏的图标映射
 const iconList = {
-  "/home": <UserOutlined />,
+  "/home": <HomeOutlined />,
   "/user-manage": <UserOutlined />,
-  "/user-manage/list": <UserOutlined />,
-  "/right-manage": <UserOutlined />,
-  "/right-manage/role/list": <UserOutlined />,
-  "/right-manage/right/list": <UserOutlined />
-  //.......
+  "/user-manage/list": <BarsOutlined />,
+  "/right-manage": <AuditOutlined />,
+  "/right-manage/role/list": <TeamOutlined />,
+  "/right-manage/right/list": <DatabaseOutlined />,
+  "/news-manage": <FolderOpenOutlined />,
+  "/news-manage/add": <EditOutlined />,
+  "/news-manage/draft": <DeleteOutlined />,
+  "/news-manage/category": <RadarChartOutlined />,
+  "/audit-manage": <LaptopOutlined />,
+  "/audit-manage/audit": <FileSearchOutlined />,
+  "/audit-manage/list": <OrderedListOutlined />,
+  "/publish-manage": <UploadOutlined />,
+  "/publish-manage/unpublished": <FormOutlined />,
+  "/publish-manage/published": <CloudUploadOutlined />,
+  "/publish-manage/sunset": <ClearOutlined />
 }
-
 function SideMenu(props) {
   //获取路由导航完整路径
   const selectKeys = [props.location.pathname];
@@ -102,7 +127,7 @@ function SideMenu(props) {
   return (
     <Sider trigger={null} collapsible collapsed={props.isCollapsed} >
       <div className='side'>
-        <div className="logo">全球新闻发布管理系统</div>
+        <div className="logo">新闻管理系统</div>
         <div className='menu'>
           {/* defaultOpenKeys	初始展开的 SubMenu 菜单项 key 数组 */}
           {/* selectedKeys	当前选中的菜单项 key 数组 ==> 组件是受控组件*/}

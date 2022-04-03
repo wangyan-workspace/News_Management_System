@@ -1,9 +1,9 @@
 import React from 'react';
-import { Form, Button, Input,message } from 'antd';
+import { Form, Button, Input, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './Login.css';
 //实现粒子效果
-// import Particles from 'react-particles-js';
+import Particles from 'react-tsparticles';
 import axios from 'axios';
 
 export default function Login(props) {
@@ -11,11 +11,11 @@ export default function Login(props) {
     console.log(values);
     axios.get(`/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`).then(res => {
       console.log(res.data);
-      if(res.data.length === 0) {
+      if (res.data.length === 0) {
         message.error("用户名或密码不匹配！");
       } else {
         //存储token值  JSON.stringify()将用户数据进行存储，否则存储的格式是[object,object]
-        localStorage.setItem("token",JSON.stringify(res.data[0]));
+        localStorage.setItem("token", JSON.stringify(res.data[0]));
         // 跳转到首页
         props.history.push("/");
       }
@@ -23,7 +23,7 @@ export default function Login(props) {
   }
   return (
     <div style={{ background: "rgb(35,39,65)", height: "100%" }}>
-      {/* <Particles
+      <Particles
         height={document.documentElement.clientHeight}
         params={
           {
@@ -179,9 +179,9 @@ export default function Login(props) {
               }
             }
           }
-        } /> */}
+        } />
       <div className='form-container'>
-        <div className='login-title'>全球新闻发布管理系统</div>
+        <div className='login-title'>新闻管理系统</div>
         <Form
           name="normal_login"
           onFinish={onFinish}
