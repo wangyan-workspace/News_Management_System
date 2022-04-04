@@ -91,6 +91,10 @@ function SideMenu(props) {
   //分割取出一级菜单
   const openKeys = ["/" + props.location.pathname.split("/")[1]];
 
+  // console.log("props.location.pathname",props.location.pathname);
+  // console.log("selectKeys",selectKeys);
+  // console.log("props.location.pathname.split('/')",props.location.pathname.split("/"));
+  // console.log("openKeys",openKeys);
   //存储菜单栏列表
   const [menu, setMenu] = useState([]);
 
