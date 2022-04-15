@@ -68,6 +68,8 @@ export default function RightList() {
   const confirmMethod = (item) => {
     confirm({
       title: '你确定要删除吗？',
+      okText: "确定",
+      cancelText: "取消",
       icon: <ExclamationCircleOutlined />,
       onOk() {
         deleteMethod(item);

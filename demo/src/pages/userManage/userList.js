@@ -233,7 +233,7 @@ export default function UserList() {
         }
         return item
       }))
-      //如果操作为超级管理员，isUpdateDisabled为true,禁用状态
+      //如果操作为超级管理员，isUpdateDisabled为发false,禁用状态
       //要将禁用的标识置返，否则会影响下一条数据的修改
       setIsUpdateDisabled(!isUpdateDisabled);
 

@@ -59,15 +59,17 @@ export default function NewsCategory() {
             return item;
         }))
 
-        axios.patch(`/categories/${record.id}`,{
-            title:record.title,
-            value:record.title
+        axios.patch(`/categories/${record.id}`, {
+            title: record.title,
+            value: record.title
         })
     }
 
     const confirmMethod = (item) => {
         confirm({
             title: '你确定要删除?',
+            okText: "确定",
+            cancelText: "取消",
             icon: <ExclamationCircleOutlined />,
             // content: 'Some descriptions',
             onOk() {

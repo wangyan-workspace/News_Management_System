@@ -41,6 +41,7 @@ function NewsRouter(props) {
     const [backRouteList, setBackRouteList] = useState([]);
 
     const { role: { rights } } = JSON.parse(localStorage.getItem("token"));
+    // console.log("具有的权限",rights);
 
     useEffect(() => {
         Promise.all([
