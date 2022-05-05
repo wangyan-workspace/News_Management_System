@@ -7,8 +7,8 @@ export default function News() {
     //获取所有已发货的新闻
     const [list, setList] = useState([]);
     useEffect(() => {
-        axios.get("/news?publishState=2&_expand=category").then(res => {
-            // console.log()
+        axios.get("/news?publishState=2&_expand=category&_sort=publishTime&_order=desc").then(res => {
+            // console.log(res.data);
             setList(Object.entries(_.groupBy(res.data, item => item.category.title)))
         })
     }, [])

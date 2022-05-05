@@ -5,7 +5,7 @@ export default function NoPermission() {
     <div>
       <div style={{ color: "orange", fontSize: "28px" }}>页面找不到了！！！</div>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <img src={NotFound404} style={{width:"700px"}}/>
+        <img src={NotFound404} alt="404图片" style={{width:"700px"}}/>
       </div>
     </div>
   );
