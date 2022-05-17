@@ -51,15 +51,16 @@ export default function RoleList() {
       title: '操作',
       render: (item) => {
         return <div>
-          <Button
+          {/* <Button
             danger
             shape="circle"
             icon={<DeleteOutlined />}
             onClick={() => { confirmMethod(item) }}
-          ></Button>
+          ></Button> */}
           <Button
             type='primary'
             shape="circle"
+            disabled={item.roleName === '超级管理员'}
             icon={<UnorderedListOutlined />}
             onClick={() => {
               console.log(item);
@@ -74,20 +75,20 @@ export default function RoleList() {
     }
   ]
   //是否要删除的确认弹窗
-  const confirmMethod = (item) => {
-    confirm({
-      title: '你确定要删除吗?',
-      okText: "确定",
-      cancelText: "取消",
-      icon: <ExclamationCircleOutlined />,
-      onOk() {
-        deleteMethod(item);
-      },
-      onCancel() {
-        console.log("cancel");
-      }
-    })
-  }
+  // const confirmMethod = (item) => {
+  //   confirm({
+  //     title: '你确定要删除吗?',
+  //     okText: "确定",
+  //     cancelText: "取消",
+  //     icon: <ExclamationCircleOutlined />,
+  //     onOk() {
+  //       deleteMethod(item);
+  //     },
+  //     onCancel() {
+  //       console.log("cancel");
+  //     }
+  //   })
+  // }
   // 删除对应的角色
   const deleteMethod = (item) => {
     setDataSource(dataSource.filter(data => data.id !== item.id));
